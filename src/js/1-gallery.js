@@ -69,11 +69,11 @@ const images = [
 
 const galleryList = document.querySelector('.gallery');
 
-images.forEach(({ preview, original, description }) => {
-  const li = document.createElement('li');
-  li.className = 'gallery-item';
-  li.innerHTML = `
-    <a class="gallery-link" href=${original}>
+const markup = images
+  .map(
+    ({ preview, original, description }) => `
+<li class="gallery-item">
+ <a class="gallery-link" href=${original}>
       <img
         class="gallery-image"
         src= ${preview}
@@ -81,9 +81,12 @@ images.forEach(({ preview, original, description }) => {
         alt=${description}
       />
     </a>
-  `;
-  galleryList.appendChild(li);
-});
+</li>
+`
+  )
+  .join('');
+
+galleryList.insertAdjacentHTML('beforeend', markup);
 
 let gallery = new SimpleLightbox('.gallery a', {
   captions: true,
